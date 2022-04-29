@@ -26,10 +26,11 @@ enum Role {
 
 model Product {
   id        String        @id @default(uuid())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  name      String
-  gender    ProductGender
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String
+  gender      ProductGender
+  orderItems  OrderItem[]
 }
 
 enum ProductGender {
@@ -45,4 +46,16 @@ model Order {
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id])
   userId    String
+  oderItems OrderItem[]
+}
+
+model OrderItem {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt 
+  numberOfItems Int
+  orders        Order    @relation(fields: [orderId], references: [id])
+  orderId       String
+  product       Product  @relation(fields: [productId], references: [id])
+  productId     String
 }
