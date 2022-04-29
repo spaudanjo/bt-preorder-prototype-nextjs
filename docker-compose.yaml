@@ -1,0 +1,20 @@
+version: "3.6"
+services:
+    db:
+        image: mysql/mysql-server:8.0 # We run MySQL 8.0 on the production environment atm
+        command: --default-authentication-plugin=mysql_native_password --lower_case_table_names=1
+        environment:
+            MYSQL_ROOT_PASSWORD: preorder-db-root-password
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: preorder_dev
+        volumes:
+            - ./back/init.sql:/docker-entrypoint-initdb.d/init.sql
+        ports:
+            # <Port exposed> : < MySQL Port running inside container>
+            - 32000:3306
+        networks:
+            - backend
+
+networks:
+    backend:
+        driver: bridge
