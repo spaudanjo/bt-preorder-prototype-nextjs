@@ -28,6 +28,7 @@ export type StockDataItem = {
   __typename?: 'StockDataItem';
   availableItems: Scalars['Int'];
   id: Scalars['String'];
+  product: Product;
   size: Scalars['String'];
 };
 

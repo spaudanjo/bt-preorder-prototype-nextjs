@@ -15,5 +15,6 @@ type Query {
 type StockDataItem {
   availableItems: Int!
   id: String!
+  product: Product!
   size: String!
 }

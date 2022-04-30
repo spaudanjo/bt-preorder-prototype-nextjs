@@ -1,4 +1,5 @@
 import { objectType, extendType, nonNull } from 'nexus'
+import { Product } from './Product'
 
 export const StockDataItem = objectType({
   name: 'StockDataItem',
@@ -6,18 +7,15 @@ export const StockDataItem = objectType({
     t.nonNull.string('id')
     t.nonNull.int('availableItems')
     t.nonNull.string('size')
-    // t.nonNull.field('product', {
-    //   type: nonNull(Product),
-    //   resolve(parent, _args, ctx) {
-    //     return ctx.prisma.product.findFirst({
-    //       where: {
-    //         id: parent.productId
-    //       }
-    //     })
-    //   }
-    // })
-//   gender      ProductGender
-//   orderItems  OrderItem[]
+    t.nonNull.field('product', {
+      type: nonNull(Product),
+      async resolve(parent, _args, ctx) {
+        const productOfStockDataItem = await ctx.prisma.stockDataItem.findFirst({
+          where: {id: parent.id}
+        }).product()
+        return productOfStockDataItem!
+      }
+    })
   },
 })
 
@@ -27,7 +25,11 @@ export const StockDataItemsQuery = extendType({
       t.nonNull.list.field('stockDataItems', {
         type: nonNull('StockDataItem'),
         resolve(_parent, _args, ctx) {
-          return ctx.prisma.stockDataItem.findMany()
+          return ctx.prisma.stockDataItem.findMany({
+            include: {
+              product: true
+            }
+          })
         }
       })
     },
