@@ -31,6 +31,7 @@ model Product {
   name        String
   gender      ProductGender
   orderItems  OrderItem[]
+  stockDataItems  StockDataItem[]
 }
 
 enum ProductGender {
@@ -39,6 +40,17 @@ enum ProductGender {
   KIDS
   UNISEX
 }
+
+model StockDataItem {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt 
+  availableItems  Int
+  size            String   @default("L")
+  product         Product  @relation(fields: [productId], references: [id])
+  productId       String
+}
+
 
 model Order {
   id        String   @id @default(uuid())
@@ -54,6 +66,7 @@ model OrderItem {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt 
   numberOfItems Int
+  size          String   @default("L")
   orders        Order    @relation(fields: [orderId], references: [id])
   orderId       String
   product       Product  @relation(fields: [productId], references: [id])
