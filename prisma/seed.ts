@@ -36,6 +36,25 @@ async function main() {
   });
 
   await generateStockDataItems();
+
+  const orderFormId = uuidv4();
+  await prisma.orderForm.create({
+    data: {
+      id: orderFormId,
+      title: "Order Form 1",
+      slug: "order-form-1",
+      status: "ACTIVE",
+    },
+  });
+
+  await prisma.orderFormItem.create({
+    data: {
+      orderFormId,
+      orderFormViewType: "INFO_MESSAGE",
+      itemSequence: 1,
+      infoMessageFormInfoMessage: "Hello - this is the first info message",
+    },
+  });
 }
 
 main()

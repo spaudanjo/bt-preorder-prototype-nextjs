@@ -71,3 +71,40 @@ model OrderItem {
   product       Product  @relation(fields: [productId], references: [id])
   productId     String
 }
+
+enum OrderFormStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+}
+
+model OrderForm {
+  id             String          @id @default(uuid())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  title          String
+  slug           String
+  status         OrderFormStatus
+  orderFormItems OrderFormItem[]
+
+  @@unique([slug])
+}
+
+enum OrderFormViewType {
+  INFO_MESSAGE
+  SHOPPING_FORM
+  ORDER_CONFIRMATION
+}
+
+model OrderFormItem {
+  id                String            @id @default(uuid())
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  orderForm         OrderForm         @relation(fields: [orderFormId], references: [id])
+  orderFormId       String
+  orderFormViewType OrderFormViewType
+  itemSequence      Int
+  infoMessageFormInfoMessage String?
+
+  @@unique([orderFormId, itemSequence])
+}

@@ -12,6 +12,41 @@ export type Scalars = {
   Float: number;
 };
 
+export type InfoMessageForm = OrderFormItem & {
+  __typename?: 'InfoMessageForm';
+  id: Scalars['String'];
+  infoMessage?: Maybe<Scalars['String']>;
+  itemSequence: Scalars['Int'];
+  orderFormViewType: OrderFormViewType;
+};
+
+export type OrderForm = {
+  __typename?: 'OrderForm';
+  id: Scalars['String'];
+  orderFormItems: Array<OrderFormItem>;
+  slug: Scalars['String'];
+  status: OrderFormStatus;
+  title: Scalars['String'];
+};
+
+export type OrderFormItem = {
+  id: Scalars['String'];
+  itemSequence: Scalars['Int'];
+  orderFormViewType: OrderFormViewType;
+};
+
+export enum OrderFormStatus {
+  Active = 'ACTIVE',
+  Draft = 'DRAFT',
+  Inactive = 'INACTIVE'
+}
+
+export enum OrderFormViewType {
+  InfoMessage = 'INFO_MESSAGE',
+  OrderConfirmation = 'ORDER_CONFIRMATION',
+  ShoppingForm = 'SHOPPING_FORM'
+}
+
 export type Product = {
   __typename?: 'Product';
   id: Scalars['String'];
@@ -20,6 +55,7 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  orderForms: Array<OrderForm>;
   products: Array<Product>;
   stockDataItems: Array<StockDataItem>;
 };

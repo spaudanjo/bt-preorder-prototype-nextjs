@@ -2,12 +2,46 @@
 ### Do not make changes to this file directly
 
 
+type InfoMessageForm implements OrderFormItem {
+  id: String!
+  infoMessage: String
+  itemSequence: Int!
+  orderFormViewType: OrderFormViewType!
+}
+
+type OrderForm {
+  id: String!
+  orderFormItems: [OrderFormItem!]!
+  slug: String!
+  status: OrderFormStatus!
+  title: String!
+}
+
+interface OrderFormItem {
+  id: String!
+  itemSequence: Int!
+  orderFormViewType: OrderFormViewType!
+}
+
+enum OrderFormStatus {
+  ACTIVE
+  DRAFT
+  INACTIVE
+}
+
+enum OrderFormViewType {
+  INFO_MESSAGE
+  ORDER_CONFIRMATION
+  SHOPPING_FORM
+}
+
 type Product {
   id: String!
   name: String!
 }
 
 type Query {
+  orderForms: [OrderForm!]!
   products: [Product!]!
   stockDataItems: [StockDataItem!]!
 }
