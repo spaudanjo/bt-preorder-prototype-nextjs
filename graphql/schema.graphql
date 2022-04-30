@@ -9,4 +9,11 @@ type Product {
 
 type Query {
   products: [Product!]!
+  stockDataItems: [StockDataItem!]!
+}
+
+type StockDataItem {
+  availableItems: Int!
+  id: String!
+  size: String!
 }

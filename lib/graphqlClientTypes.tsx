@@ -21,6 +21,14 @@ export type Product = {
 export type Query = {
   __typename?: 'Query';
   products: Array<Product>;
+  stockDataItems: Array<StockDataItem>;
+};
+
+export type StockDataItem = {
+  __typename?: 'StockDataItem';
+  availableItems: Scalars['Int'];
+  id: Scalars['String'];
+  size: Scalars['String'];
 };
 
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
