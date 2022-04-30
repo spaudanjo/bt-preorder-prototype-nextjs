@@ -1,0 +1,13 @@
+overwrite: true
+schema: "./graphql/*"
+documents: 
+  - "./pages/**/*.tsx"
+  - "./components/**/*.tsx"
+
+generates:
+  ./graphql/queryTypes.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+    config:
+      fetcher: fetch

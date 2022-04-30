@@ -3,9 +3,10 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { gql, useQuery } from "@apollo/client";
+import { ProductsQuery, ProductsQueryVariables } from "../graphql/queryTypes";
 
 const AllLinksQuery = gql`
-  query {
+  query Products {
     products {
       id
       name
@@ -14,7 +15,7 @@ const AllLinksQuery = gql`
 `;
 
 const Home: NextPage = () => {
-  const { data, loading, error } = useQuery(AllLinksQuery)
+  const { data, loading, error } = useQuery<ProductsQuery, ProductsQueryVariables>(AllLinksQuery)
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Oh no... {error.message}</p>
@@ -36,7 +37,7 @@ const Home: NextPage = () => {
             <div key={product.id}>
               <h2>{product.name}</h2>
               </div>
-          )}
+          ))}
         </div>
       </main>
 

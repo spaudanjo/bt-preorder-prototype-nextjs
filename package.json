@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "yarn generate-graphql-ts-types --watch && next dev",
+    "build": "yarn generate-graphql-ts-types && next build",
     "start": "next start",
     "lint": "next lint",
-    "ts-node": "ts-node --compiler-options '{\\\"module\\\":\\\"commonjs\\\"}'"
+    "ts-node": "ts-node --compiler-options '{\\\"module\\\":\\\"commonjs\\\"}'",
+    "generate-graphql-ts-types": "yarn graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.6.1",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-operations": "^2.3.5",
+    "@graphql-codegen/typescript-react-query": "^3.5.9",
     "@prisma/client": "3.13.0",
     "apollo-server-micro": "^3.6.7",
     "graphql": "^16.4.0",
