@@ -3,10 +3,10 @@
 
 
 type Product {
-  id: String
-  name: String
+  id: String!
+  name: String!
 }
 
 type Query {
-  products: [Product]!
+  products: [Product!]!
 }

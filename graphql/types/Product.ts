@@ -1,10 +1,10 @@
-import { objectType, extendType } from 'nexus'
+import { objectType, extendType, nonNull } from 'nexus'
 
 export const Product = objectType({
   name: 'Product',
   definition(t) {
-    t.string('id')
-    t.string('name')
+    t.nonNull.string('id')
+    t.nonNull.string('name')
 //   gender      ProductGender
 //   orderItems  OrderItem[]
   },
@@ -14,10 +14,10 @@ export const ProductsQuery = extendType({
     type: 'Query',
     definition(t) {
       t.nonNull.list.field('products', {
-        type: 'Product',
+        type: nonNull('Product'),
         resolve(_parent, _args, ctx) {
           return ctx.prisma.product.findMany()
-        },
+        }
       })
     },
   })

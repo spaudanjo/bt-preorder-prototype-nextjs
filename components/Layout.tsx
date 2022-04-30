@@ -6,7 +6,6 @@ interface LayoutProps {
 const Layout = ({children}: LayoutProps) => {
     return (
         <div>
-            <h1>Hello Next.js</h1>
             {children}
         </div>
     );

@@ -5,7 +5,7 @@ documents:
   - "./components/**/*.tsx"
 
 generates:
-  ./graphql/queryTypes.tsx:
+  ./lib/graphqlClientTypes.tsx:
     plugins:
       - "typescript"
       - "typescript-operations"

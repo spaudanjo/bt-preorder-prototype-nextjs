@@ -14,16 +14,16 @@ export type Scalars = {
 
 export type Product = {
   __typename?: 'Product';
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  products: Array<Maybe<Product>>;
+  products: Array<Product>;
 };
 
 export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id?: string | null, name?: string | null } | null> };
+export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string }> };
