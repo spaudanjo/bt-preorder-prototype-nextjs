@@ -25,13 +25,13 @@ enum Role {
 }
 
 model Product {
-  id        String        @id @default(uuid())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  name        String
-  gender      ProductGender
-  orderItems  OrderItem[]
-  stockDataItems  StockDataItem[]
+  id             String          @id @default(uuid())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  name           String
+  gender         ProductGender
+  orderItems     OrderItem[]
+  stockDataItems StockDataItem[]
 }
 
 enum ProductGender {
@@ -42,21 +42,20 @@ enum ProductGender {
 }
 
 model StockDataItem {
-  id              String   @id @default(uuid())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt 
-  availableItems  Int
-  size            String   @default("L")
-  product         Product  @relation(fields: [productId], references: [id])
-  productId       String
+  id             String   @id @default(uuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  availableItems Int
+  size           String   @default("L")
+  product        Product  @relation(fields: [productId], references: [id])
+  productId      String
 }
 
-
 model Order {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
+  id        String      @id @default(uuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      User        @relation(fields: [userId], references: [id])
   userId    String
   oderItems OrderItem[]
 }
@@ -64,7 +63,7 @@ model Order {
 model OrderItem {
   id            String   @id @default(uuid())
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt 
+  updatedAt     DateTime @updatedAt
   numberOfItems Int
   size          String   @default("L")
   orders        Order    @relation(fields: [orderId], references: [id])
