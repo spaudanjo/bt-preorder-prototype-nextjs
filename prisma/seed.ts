@@ -4,6 +4,25 @@ import { v4 as uuidv4 } from "uuid";
 
 const prisma = new PrismaClient();
 
+const generateStockDataItems = async () => {
+  const sizeAndNumberOfItemTuples: [string, number][] = [
+    ["L", 30],
+    ["M", 90],
+    ["S", 49],
+  ];
+  const orderItems = products.flatMap((product) =>
+    sizeAndNumberOfItemTuples.map(([size, availableItems]) => ({
+      productId: product.id,
+      size,
+      availableItems,
+    }))
+  );
+
+  await prisma.stockDataItem.createMany({
+    data: orderItems,
+  });
+};
+
 async function main() {
   await prisma.user.create({
     data: {
@@ -13,11 +32,10 @@ async function main() {
   });
 
   await prisma.product.createMany({
-    data: products.map((product) => ({
-      ...product,
-      id: uuidv4(),
-    })),
+    data: products,
   });
+
+  await generateStockDataItems();
 }
 
 main()
