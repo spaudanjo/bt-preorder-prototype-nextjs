@@ -55,6 +55,15 @@ async function main() {
       infoMessageFormInfoMessage: "Hello - this is the first info message",
     },
   });
+
+  await prisma.orderFormItem.create({
+    data: {
+      orderFormId,
+      orderFormViewType: "SHOPPING_FORM",
+      itemSequence: 2,
+      shoppingFormShoppingInfo: "Hello - this is the first shopping form",
+    },
+  });
 }
 
 main()

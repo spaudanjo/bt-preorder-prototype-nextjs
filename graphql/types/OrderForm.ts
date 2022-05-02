@@ -4,14 +4,16 @@ import {
   nonNull,
   enumType,
   interfaceType,
+  list,
 } from "nexus";
 import { Product } from "./Product";
+import { StockDataItem } from "./StockData";
 
 export const OrderFormItem = interfaceType({
   name: "OrderFormItem",
   resolveType(source) {
     // TODO: resolve type based on source.orderFormViewType
-    return source.orderFormViewType === "INFO_MESSAGE" ? "InfoMessageForm" : "InfoMessageForm";
+    return source.orderFormViewType === "INFO_MESSAGE" ? "InfoMessageForm" : "ShoppingForm";
   },
   definition(t) {
     t.nonNull.string("id");
@@ -27,12 +29,30 @@ export const OrderFormItem = interfaceType({
   },
 });
 
+export const ShoppingForm = objectType({
+  name: "ShoppingForm",
+  definition(t) {
+    t.implements(OrderFormItem);
+    t.string("shoppingInfo");
+    t.nonNull.list.field("stockData", {
+      type: nonNull(StockDataItem),
+      async resolve(parent, _args, ctx) {
+        return ctx.prisma.stockDataItem.findMany({
+          include: {
+            product: true
+          }
+        })
+          
+      },
+    }); 
+  },
+});
+
 export const InfoMessageForm = objectType({
   name: "InfoMessageForm",
   definition(t) {
     t.implements(OrderFormItem);
-    // TODO: make this nonNull
-    t.string("infoMessage");
+    t.nonNull.string("infoMessage");
   },
 });
 
@@ -63,6 +83,11 @@ export const OrderForm = objectType({
                   ...orderFormItem,
                   infoMessage: orderFormItem.infoMessageFormInfoMessage,
                 };
+                case "SHOPPING_FORM":
+                  return {
+                    ...orderFormItem, 
+                    shoppingInfo: orderFormItem.shoppingFormShoppingInfo,
+                  }
               default:
                 return orderFormItem;
             }

@@ -105,6 +105,7 @@ model OrderFormItem {
   orderFormViewType OrderFormViewType
   itemSequence      Int
   infoMessageFormInfoMessage String?
+  shoppingFormShoppingInfo String?
 
   @@unique([orderFormId, itemSequence])
 }

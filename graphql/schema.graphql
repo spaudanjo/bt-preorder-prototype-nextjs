@@ -4,7 +4,7 @@
 
 type InfoMessageForm implements OrderFormItem {
   id: String!
-  infoMessage: String
+  infoMessage: String!
   itemSequence: Int!
   orderFormViewType: OrderFormViewType!
 }
@@ -44,6 +44,14 @@ type Query {
   orderForms: [OrderForm!]!
   products: [Product!]!
   stockDataItems: [StockDataItem!]!
+}
+
+type ShoppingForm implements OrderFormItem {
+  id: String!
+  itemSequence: Int!
+  orderFormViewType: OrderFormViewType!
+  shoppingInfo: String
+  stockData: [StockDataItem!]!
 }
 
 type StockDataItem {
