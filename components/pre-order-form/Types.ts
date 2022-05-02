@@ -72,18 +72,18 @@ export interface TextInputFormData extends FormDataWithLocalizedContent {
   type: "text-input";
 }
 
-export type FormStructureAPIDataEntry =
-  | {
-      id: string;
-      type: "medical-help" | "language-chooser";
-    }
-  | InfoMessageFormData
-  | TextInputFormData
-  | {
-      id: string;
-      type: "nfi-shop";
-      stockData: Array<StockDataItem>;
-    };
+// export type FormStructureAPIDataEntry =
+//   | {
+//       id: string;
+//       type: "medical-help" | "language-chooser";
+//     }
+//   | InfoMessageFormData
+//   | TextInputFormData
+//   | {
+//       id: string;
+//       type: "nfi-shop";
+//       stockData: Array<StockDataItem>;
+//     };
 
 export interface ProductOrder {
   productType: string;

@@ -3,15 +3,16 @@ import { FormViewSubmitComponentProps } from "../../Types";
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 
 interface InfoMessageFormViewProps extends FormViewSubmitComponentProps {
-  title: string;
-  description: string;
+  // title: string;
+  // description: string;
+  infoMessage: string;
 }
 
-const InfoMessage = ({ onSubmitFormView, formViewId, title, description }: InfoMessageFormViewProps ) => {
+const InfoMessage = ({ onSubmitFormView, infoMessage }: InfoMessageFormViewProps ) => {
   return (
     <Box>
-      <Heading>{title}</Heading>
-      <Text>{description}</Text>
+      {/* <Heading>{title}</Heading> */}
+      <Text>{infoMessage}</Text>
       {/* <p>
         <label htmlFor="help-needed"></label>
         <input type="text" id="help-needed" />

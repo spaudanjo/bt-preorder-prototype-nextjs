@@ -16,7 +16,6 @@ export type InfoMessageForm = OrderFormItem & {
   __typename?: 'InfoMessageForm';
   id: Scalars['String'];
   infoMessage: Scalars['String'];
-  itemSequence: Scalars['Int'];
   orderFormViewType: OrderFormViewType;
 };
 
@@ -31,7 +30,6 @@ export type OrderForm = {
 
 export type OrderFormItem = {
   id: Scalars['String'];
-  itemSequence: Scalars['Int'];
   orderFormViewType: OrderFormViewType;
 };
 
@@ -69,7 +67,6 @@ export type QueryOrderFormArgs = {
 export type ShoppingForm = OrderFormItem & {
   __typename?: 'ShoppingForm';
   id: Scalars['String'];
-  itemSequence: Scalars['Int'];
   orderFormViewType: OrderFormViewType;
   shoppingInfo?: Maybe<Scalars['String']>;
   stockData: Array<StockDataItem>;

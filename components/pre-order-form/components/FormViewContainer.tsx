@@ -1,11 +1,12 @@
 import { Box, Stack } from "@chakra-ui/react";
 import React from "react";
+import { ShoppingForm, InfoMessageForm, OrderFormQuery } from "../../../lib/graphqlClientTypes";
 import { GlobalContext } from "../GlobaContext";
 import { getLocalizedContentForCurrentLanguageOrForEnglish } from "../lib/I18n";
 import languageMap from "../lib/LanguageMap";
 import {
   FlattenedFormViewResult,
-  FormStructureAPIDataEntry,
+  // FormStructureAPIDataEntry,
   FormViewSubmitComponentProps,
 } from "../Types";
 import FinalSubmitView from "./form-views/FinalSubmitView";
@@ -21,32 +22,36 @@ const FormViewComponent = ({
   formViewData,
   ...props
 }: {
-  formViewData: FormStructureAPIDataEntry;
+  formViewData: (ShoppingForm | InfoMessageForm | undefined);
 } & FormViewSubmitComponentProps) => {
   const { currentLanguage } = React.useContext(GlobalContext);
-  switch (formViewData.type) {
-    case "language-chooser": {
-      return <LanguageChooser {...props} availableLanguages={languageMap} />;
-    }
-    case "medical-help": {
-      return <MedicalHelpForm {...props} />;
-    }
-    case "info-message": {
-      console.log(getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id))
-      return <InfoMessage {...{...props, ...getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id)}} />;
-    }
-    case "text-input": {
-      console.log(getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id))
-      return <TextInput {...{...props, ...getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id)}} />;
-    }
-    case "nfi-shop": {
-      // return <NFIShop {...props} stockData={formViewData.stockData} />;
-      return <div>NOT IMPLEMENTED YET</div>
-    }
+  if(formViewData == null) {
+    return null;
   }
+  switch (formViewData.__typename) {
+    // case "language-chooser": {
+    //   return <LanguageChooser {...props} availableLanguages={languageMap} />;
+    // }
+    // case "medical-help": {
+    //   return <MedicalHelpForm {...props} />;
+    // }
+    case "InfoMessageForm": {
+      // console.log(getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id))
+      return <InfoMessage {...{...props, ...formViewData}} />;
+    }
+    // case "text-input": {
+    //   console.log(getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id))
+    //   return <TextInput {...{...props, ...getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id)}} />;
+    // }
+    // case "nfi-shop": {
+    //   // return <NFIShop {...props} stockData={formViewData.stockData} />;
+    //   return <div>NOT IMPLEMENTED YET</div>;
+    // }
+  }
+  return <div>FALLBACK</div>;
 };
 
-const FormViewContainer = () => {
+const FormViewContainer = ({orderFormItems}: {orderFormItems: (ShoppingForm | InfoMessageForm)[]}) => {
   const [formViewIndex, setFormViewIndex] = React.useState(0);
   const [allFlattenedFormViewResults, setAllFlattenedFormViewResults] =
     React.useState<FlattenedFormViewResult>({});
@@ -63,14 +68,15 @@ const FormViewContainer = () => {
     setFormViewIndex((prevFormViewIndex: number) => prevFormViewIndex + 1);
   };
 
-  const formViewData = mockedFormStructureFromAPI?.[formViewIndex];
+  // const orderFormItems = orderFormData?.orderForm?.orderFormItems;
+  const formViewData = orderFormItems?.[formViewIndex];
 
   const showFinalSubmitView =
-    formViewIndex === mockedFormStructureFromAPI.length;
+    formViewIndex === orderFormItems?.length;
 
   return (
     <Stack>
-      {!showFinalSubmitView && (
+      {!showFinalSubmitView && formViewData && (
         <FormViewComponent
           onSubmitFormView={onSubmitFormView}
           formViewData={formViewData}

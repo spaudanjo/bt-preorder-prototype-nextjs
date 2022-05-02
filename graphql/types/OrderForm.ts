@@ -28,7 +28,7 @@ export const OrderFormItem = interfaceType({
         })
       ),
     });
-    t.nonNull.int("itemSequence");
+    // t.nonNull.int("itemSequence");
   },
 });
 
