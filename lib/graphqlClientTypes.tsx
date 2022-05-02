@@ -55,9 +55,15 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  orderForm?: Maybe<OrderForm>;
   orderForms: Array<OrderForm>;
   products: Array<Product>;
   stockDataItems: Array<StockDataItem>;
+};
+
+
+export type QueryOrderFormArgs = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type ShoppingForm = OrderFormItem & {
@@ -81,3 +87,10 @@ export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string }> };
+
+export type OrderFormQueryVariables = Exact<{
+  formId: Scalars['String'];
+}>;
+
+
+export type OrderFormQuery = { __typename?: 'Query', orderForm?: { __typename?: 'OrderForm', id: string, slug: string, status: OrderFormStatus, orderFormItems: Array<{ __typename: 'InfoMessageForm', infoMessage: string, id: string } | { __typename: 'ShoppingForm', shoppingInfo?: string | null, id: string, stockData: Array<{ __typename?: 'StockDataItem', size: string, availableItems: number, product: { __typename?: 'Product', name: string } }> }> } | null };

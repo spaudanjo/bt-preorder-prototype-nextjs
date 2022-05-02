@@ -37,7 +37,7 @@ async function main() {
 
   await generateStockDataItems();
 
-  const orderFormId = uuidv4();
+  const orderFormId = "189432";
   await prisma.orderForm.create({
     data: {
       id: orderFormId,

@@ -41,6 +41,10 @@ type Product {
 }
 
 type Query {
+  orderForm(
+    """The form id."""
+    id: String
+  ): OrderForm
   orderForms: [OrderForm!]!
   products: [Product!]!
   stockDataItems: [StockDataItem!]!

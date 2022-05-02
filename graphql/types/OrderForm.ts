@@ -5,6 +5,7 @@ import {
   enumType,
   interfaceType,
   list,
+  stringArg,
 } from "nexus";
 import { Product } from "./Product";
 import { StockDataItem } from "./StockData";
@@ -13,7 +14,9 @@ export const OrderFormItem = interfaceType({
   name: "OrderFormItem",
   resolveType(source) {
     // TODO: resolve type based on source.orderFormViewType
-    return source.orderFormViewType === "INFO_MESSAGE" ? "InfoMessageForm" : "ShoppingForm";
+    return source.orderFormViewType === "INFO_MESSAGE"
+      ? "InfoMessageForm"
+      : "ShoppingForm";
   },
   definition(t) {
     t.nonNull.string("id");
@@ -39,12 +42,11 @@ export const ShoppingForm = objectType({
       async resolve(parent, _args, ctx) {
         return ctx.prisma.stockDataItem.findMany({
           include: {
-            product: true
-          }
-        })
-          
+            product: true,
+          },
+        });
       },
-    }); 
+    });
   },
 });
 
@@ -83,11 +85,11 @@ export const OrderForm = objectType({
                   ...orderFormItem,
                   infoMessage: orderFormItem.infoMessageFormInfoMessage,
                 };
-                case "SHOPPING_FORM":
-                  return {
-                    ...orderFormItem, 
-                    shoppingInfo: orderFormItem.shoppingFormShoppingInfo,
-                  }
+              case "SHOPPING_FORM":
+                return {
+                  ...orderFormItem,
+                  shoppingInfo: orderFormItem.shoppingFormShoppingInfo,
+                };
               default:
                 return orderFormItem;
             }
@@ -104,6 +106,22 @@ export const OrderFormQuery = extendType({
       type: nonNull(OrderForm),
       resolve(_parent, _args, ctx) {
         return ctx.prisma.orderForm.findMany({});
+      },
+    });
+    t.field("orderForm", {
+      type: OrderForm,
+      args: {
+        id: stringArg({
+          description: "The form id.",
+        }),
+      },
+      resolve(_parent, args, ctx) {
+        if (args.id == null) {
+          return null;
+        }
+        return ctx.prisma.orderForm.findFirst({
+          where: { id: args.id },
+        });
       },
     });
   },
