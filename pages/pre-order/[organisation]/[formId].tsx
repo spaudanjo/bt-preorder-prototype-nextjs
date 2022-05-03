@@ -12,6 +12,7 @@ const FORM_QUERY = gql`
       status
       orderFormItems {
         __typename
+        orderFormViewType
         id
         ... on InfoMessageForm {
           # infoMessageFormInfoMessage
@@ -20,10 +21,13 @@ const FORM_QUERY = gql`
         ... on ShoppingForm {
           shoppingInfo
           stockData {
+            id
             size
             availableItems
             product {
+              id
               name
+              gender
             }
           }
         }
@@ -42,11 +46,12 @@ const PreOrder: NextPage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
+  if (data?.orderForm?.orderFormItems == null) return <p>Oh no...</p>;
 
   return (
     <div>
       <p>Pre-Order form with id {formId} for organisation {organisation}</p>
-      <PreOrderForm orderFormItems={data?.orderForm?.orderFormItems!} />
+      <PreOrderForm orderFormItems={data?.orderForm?.orderFormItems} />
     </div>
   );
 };

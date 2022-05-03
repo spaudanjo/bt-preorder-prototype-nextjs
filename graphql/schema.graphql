@@ -2,6 +2,13 @@
 ### Do not make changes to this file directly
 
 
+enum Gender {
+  FEMALE
+  KIDS
+  MALE
+  UNISEX
+}
+
 type InfoMessageForm implements OrderFormItem {
   id: String!
   infoMessage: String!
@@ -34,6 +41,7 @@ enum OrderFormViewType {
 }
 
 type Product {
+  gender: Gender!
   id: String!
   name: String!
 }

@@ -12,6 +12,13 @@ export type Scalars = {
   Float: number;
 };
 
+export enum Gender {
+  Female = 'FEMALE',
+  Kids = 'KIDS',
+  Male = 'MALE',
+  Unisex = 'UNISEX'
+}
+
 export type InfoMessageForm = OrderFormItem & {
   __typename?: 'InfoMessageForm';
   id: Scalars['String'];
@@ -47,6 +54,7 @@ export enum OrderFormViewType {
 
 export type Product = {
   __typename?: 'Product';
+  gender: Gender;
   id: Scalars['String'];
   name: Scalars['String'];
 };
@@ -90,4 +98,4 @@ export type OrderFormQueryVariables = Exact<{
 }>;
 
 
-export type OrderFormQuery = { __typename?: 'Query', orderForm?: { __typename?: 'OrderForm', id: string, slug: string, status: OrderFormStatus, orderFormItems: Array<{ __typename: 'InfoMessageForm', infoMessage: string, id: string } | { __typename: 'ShoppingForm', shoppingInfo?: string | null, id: string, stockData: Array<{ __typename?: 'StockDataItem', size: string, availableItems: number, product: { __typename?: 'Product', name: string } }> }> } | null };
+export type OrderFormQuery = { __typename?: 'Query', orderForm?: { __typename?: 'OrderForm', id: string, slug: string, status: OrderFormStatus, orderFormItems: Array<{ __typename: 'InfoMessageForm', infoMessage: string, orderFormViewType: OrderFormViewType, id: string } | { __typename: 'ShoppingForm', shoppingInfo?: string | null, orderFormViewType: OrderFormViewType, id: string, stockData: Array<{ __typename?: 'StockDataItem', id: string, size: string, availableItems: number, product: { __typename?: 'Product', id: string, name: string, gender: Gender } }> }> } | null };

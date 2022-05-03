@@ -1,10 +1,18 @@
-import { objectType, extendType, nonNull } from 'nexus'
+import { objectType, extendType, nonNull, enumType } from 'nexus'
 
 export const Product = objectType({
   name: 'Product',
   definition(t) {
     t.nonNull.string('id')
     t.nonNull.string('name')
+    t.nonNull.field("gender", {
+      type: nonNull(
+        enumType({
+          name: "Gender",
+          members: ["MALE", "FEMALE", "UNISEX", "KIDS"]
+        })
+      ),
+    });
 //   gender      ProductGender
 //   orderItems  OrderItem[]
   },

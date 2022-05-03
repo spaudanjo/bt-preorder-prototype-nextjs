@@ -30,28 +30,28 @@ export interface Language {
   dictionary: LanguageDictionary;
 }
 
-export interface LocalizedProductDetails {
-  productType: string;
-  size: string;
-  gender: string;
-}
-export interface Product {
-  id: string;
-  name: string;
-  category: {
-    name: string;
-  };
-  gender: string;
-  // localizedProductDetailsByLanguageId: {
-  //   [key: string]: LocalizedProductDetails;
-  // };
-}
+// export interface LocalizedProductDetails {
+//   productType: string;
+//   size: string;
+//   gender: string;
+// }
+// export interface Product {
+//   id: string;
+//   name: string;
+//   category: {
+//     name: string;
+//   };
+//   gender: string;
+//   // localizedProductDetailsByLanguageId: {
+//   //   [key: string]: LocalizedProductDetails;
+//   // };
+// }
 
-export interface StockDataItem {
-  product: Product;
-  availableItems: number;
-  size: string;
-}
+// export interface StockDataItem {
+//   product: Product;
+//   availableItems: number;
+//   size: string;
+// }
 
 export interface FormDataWithLocalizedContent {
   localizedContent: {
