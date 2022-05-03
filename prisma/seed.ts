@@ -1,18 +1,17 @@
-import { PrismaClient, ProductGender } from "@prisma/client";
-import products from "../data/products";
+import { PrismaClient, Product, ProductGender } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 
 const prisma = new PrismaClient();
 
-const generateStockDataItems = async () => {
+const generateStockDataItems = async (productIds: string[]) => {
   const sizeAndNumberOfItemTuples: [string, number][] = [
     ["L", 30],
     ["M", 90],
     ["S", 49],
   ];
-  const orderItems = products.flatMap((product) =>
+  const orderItems = productIds.flatMap((productId) =>
     sizeAndNumberOfItemTuples.map(([size, availableItems]) => ({
-      productId: product.id,
+      productId: productId,
       size,
       availableItems,
     }))
@@ -31,11 +30,39 @@ async function main() {
     },
   });
 
+  const productCategory1Id = "2ef70c85-ab21-4046-af3d-8a54a90b03bf";
+  await prisma.productCategory.create({
+    data: {
+      id: productCategory1Id,
+      name: "Tshirt",
+    },
+  });
+
+  const products = [
+    {
+      id: "dc40d1d4-8541-4cc7-bb31-aaa114dd73cc",
+      productCategoryId: productCategory1Id,
+      name: "Long Skirt",
+      gender: ProductGender.FEMALE,
+    },
+    {
+      id: "263741aa-c536-41f9-9f09-22d9a086e1d3",
+      productCategoryId: productCategory1Id,
+      name: "Jeans",
+      gender: ProductGender.MALE,
+    },
+    {
+      id: "2701b890-d9b9-4b6e-8b1f-09a33850f77d",
+      productCategoryId: productCategory1Id,
+      name: "Beanie",
+      gender: ProductGender.KIDS,
+    },
+  ];
   await prisma.product.createMany({
     data: products,
   });
 
-  await generateStockDataItems();
+  await generateStockDataItems(products.map(p => p.id));
 
   const orderFormId = "189432";
   await prisma.orderForm.create({
@@ -56,7 +83,6 @@ async function main() {
     },
   });
 
-  
   await prisma.orderFormItem.create({
     data: {
       orderFormId,

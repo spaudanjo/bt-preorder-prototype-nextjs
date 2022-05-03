@@ -47,7 +47,7 @@ ProductDetaiViewProps) => {
     <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{productsForType[0].productType}</ModalHeader>
+        <ModalHeader>{productsForType[0].name}</ModalHeader>
         {/* <ModalCloseButton /> */}
         <ModalBody>
           <Accordion defaultIndex={0} allowMultiple>
@@ -66,12 +66,7 @@ ProductDetaiViewProps) => {
                   </h2>
                   <AccordionPanel pb={4}>
                     {productsForTypeAndGender.map((product, i) => {
-                      const localizedProductDetails =
-                        getLocalizedProductDetailsForCurrentLanguageOrForEnglish(
-                          product,
-                          currentLanguage.id
-                        );
-                      return <p key={i}> {localizedProductDetails.size} </p>;
+                      return <p key={i}> {product.gender} </p>;
                     })}
                   </AccordionPanel>
                 </AccordionItem>

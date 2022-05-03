@@ -5,6 +5,7 @@ import ProductDetailView from "./ProductDetailView";
 import { getLocalizedContentForCurrentLanguageOrForEnglish } from "../../../lib/I18n";
 import { Button, Center, Grid, Heading, Stack } from "@chakra-ui/react";
 import { FormViewSubmitComponentProps } from "../../../Types";
+import { StockDataItem } from "../../../../../lib/graphqlClientTypes";
 
 interface NormalisedAndLocalisedProductTypeTuple {
   normalised: string;
@@ -14,15 +15,15 @@ interface NormalisedAndLocalisedProductTypeTuple {
 const NFIShop = ({
   onSubmitFormView,
   formViewId,
-  stockData,
-}: FormViewSubmitComponentProps & { stockData: StockData }) => {
+  stockDataItems,
+}: FormViewSubmitComponentProps & { stockDataItems: StockDataItem[] }) => {
   const { currentLanguage } = React.useContext(GlobalContext);
   const [productTypeForDetailView, setProductTypeForDetailView] =
     useState<string>();
 
-  const getProductsByProductType = (productType: string) => {
-    return stockData.filter((product) => product.productType === productType);
-  };
+  // const getProductsByProductType = (productType: string) => {
+  //   return stockData.filter((product) => product.productType === productType);
+  // };
 
   const normalisedAndLocalisedProductTypeTuples = stockData.reduce<{
     [key: string]: NormalisedAndLocalisedProductTypeTuple;

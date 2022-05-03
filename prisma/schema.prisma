@@ -25,13 +25,23 @@ enum Role {
 }
 
 model Product {
-  id             String          @id @default(uuid())
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  name           String
-  gender         ProductGender
-  orderItems     OrderItem[]
-  stockDataItems StockDataItem[]
+  id                String          @id @default(uuid())
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  name              String
+  gender            ProductGender
+  orderItems        OrderItem[]
+  stockDataItems    StockDataItem[]
+  productCategory   ProductCategory @relation(fields: [productCategoryId], references: [id])
+  productCategoryId String
+}
+
+model ProductCategory {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String
+  products  Product[]
 }
 
 enum ProductGender {
@@ -97,15 +107,15 @@ enum OrderFormViewType {
 }
 
 model OrderFormItem {
-  id                String            @id @default(uuid())
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  orderForm         OrderForm         @relation(fields: [orderFormId], references: [id])
-  orderFormId       String
-  orderFormViewType OrderFormViewType
-  itemSequence      Int
+  id                         String            @id @default(uuid())
+  createdAt                  DateTime          @default(now())
+  updatedAt                  DateTime          @updatedAt
+  orderForm                  OrderForm         @relation(fields: [orderFormId], references: [id])
+  orderFormId                String
+  orderFormViewType          OrderFormViewType
+  itemSequence               Int
   infoMessageFormInfoMessage String?
-  shoppingFormShoppingInfo String?
+  shoppingFormShoppingInfo   String?
 
   @@unique([orderFormId, itemSequence])
 }
