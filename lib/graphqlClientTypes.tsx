@@ -54,7 +54,14 @@ export enum OrderFormViewType {
 
 export type Product = {
   __typename?: 'Product';
+  category: ProductCategory;
   gender: Gender;
+  id: Scalars['String'];
+  name: Scalars['String'];
+};
+
+export type ProductCategory = {
+  __typename?: 'ProductCategory';
   id: Scalars['String'];
   name: Scalars['String'];
 };

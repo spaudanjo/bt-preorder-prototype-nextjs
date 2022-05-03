@@ -41,7 +41,13 @@ enum OrderFormViewType {
 }
 
 type Product {
+  category: ProductCategory!
   gender: Gender!
+  id: String!
+  name: String!
+}
+
+type ProductCategory {
   id: String!
   name: String!
 }
