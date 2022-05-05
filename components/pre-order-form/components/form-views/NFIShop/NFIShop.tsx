@@ -22,7 +22,8 @@ const NFIShop = ({
     useState<string>();
 
   const getProductsByProductCategoryName = (productType: string) => {
-    return stockData.flatMap(stockDataItem => stockDataItem.product).filter((product) => product.category.name === productType);
+    return stockData
+      .filter((stockDataItem) => stockDataItem.product.category.name === productType);
   };
 
   // const normalisedAndLocalisedProductTypeTuples = stockData.reduce<{
@@ -42,9 +43,12 @@ const NFIShop = ({
   //   };
   // }, {});
 
-  const productCategoryNames = stockData.reduce<string[]>((acc, stockDataItem) => {
-    return [...acc, stockDataItem.product.category.name];
-  }, []);
+  const productCategoryNames = Array.from(new Set(stockData.reduce<string[]>(
+    (acc, stockDataItem) => {
+      return [...acc, stockDataItem.product.category.name];
+    },
+    []
+  )));
 
   return (
     <Stack>
@@ -53,7 +57,9 @@ const NFIShop = ({
           // isOpen={productTypeForDetailView != null}
           onClose={() => setProductTypeForDetailView(undefined)}
           // productType={productTypeForDetailView}
-          productsForType={getProductsByProductCategoryName(productTypeForDetailView)}
+          stockDataForProductCategoryName={getProductsByProductCategoryName(
+            productTypeForDetailView
+          )}
           // onAddToCart={}
         />
       )}
@@ -62,16 +68,16 @@ const NFIShop = ({
       </Heading>
       <Grid>
         {productCategoryNames.map((productCategoryName) => (
-            <Button
-              key={productCategoryName}
-              onClick={() =>
-                // alert(`SHOW PRODUCT DETAILS FOR ${productType.normalised}`)
-                setProductTypeForDetailView(productCategoryName)
-              }
-            >
-              {productCategoryName}
-            </Button>
-          ))}
+          <Button
+            key={productCategoryName}
+            onClick={() =>
+              // alert(`SHOW PRODUCT DETAILS FOR ${productType.normalised}`)
+              setProductTypeForDetailView(productCategoryName)
+            }
+          >
+            {productCategoryName}
+          </Button>
+        ))}
       </Grid>
       <Button
         onClick={() =>

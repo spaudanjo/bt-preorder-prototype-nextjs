@@ -14,17 +14,17 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import React from "react";
-import { Product } from "../../../../../lib/graphqlClientTypes";
+import { StockDataItem } from "../../../../../lib/graphqlClientTypes";
 import { GlobalContext } from "../../../GlobaContext";
 import I18n from "../../../lib/I18n";
 
 interface ProductDetaiViewProps {
-  productsForType: Product[];
+  stockDataForProductCategoryName: StockDataItem[];
   onClose: () => void;
 }
 const ProductDetailView = ({
   onClose,
-  productsForType,
+  stockDataForProductCategoryName,
 }:
 ProductDetaiViewProps) => {
   const { currentLanguage } = React.useContext(GlobalContext);
@@ -36,18 +36,18 @@ ProductDetaiViewProps) => {
   //   ).productType;
 
 
-  const productsForTypeGroupedByGender = productsForType.reduce(
-    (acc, product) => ({
+  const productsForTypeGroupedByGender = stockDataForProductCategoryName.reduce(
+    (acc, stockDataItem) => ({
       ...acc,
-      [product.gender]: [...(acc[product.gender] || []), product],
+      [stockDataItem.product.gender]: [...(acc[stockDataItem.product.gender] || []), stockDataItem],
     }),
-    {} as { [key: string]: Array<Product> }
+    {} as { [key: string]: Array<StockDataItem> }
   );
   return (
     <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{productsForType[0].name}</ModalHeader>
+        <ModalHeader>{stockDataForProductCategoryName[0].product.category.name}</ModalHeader>
         {/* <ModalCloseButton /> */}
         <ModalBody>
           <Accordion defaultIndex={0} allowMultiple>
@@ -65,8 +65,8 @@ ProductDetaiViewProps) => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    {productsForTypeAndGender.map((product, i) => {
-                      return <p key={i}> {product.gender} </p>;
+                    {productsForTypeAndGender.map((stockDataItem, i) => {
+                      return <p key={i}> {stockDataItem.product.gender} </p>;
                     })}
                   </AccordionPanel>
                 </AccordionItem>
