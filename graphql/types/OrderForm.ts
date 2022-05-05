@@ -1,3 +1,4 @@
+import { OrderFormItem as DBOrderFormItem } from "@prisma/client";
 import {
   objectType,
   extendType,
@@ -75,7 +76,7 @@ export const OrderForm = objectType({
       t.nonNull.list.field("orderFormItems", {
         type: nonNull(OrderFormItem),
         async resolve(parent, _args, ctx) {
-          const orderFormItems = await ctx.prisma.orderForm
+          const orderFormItems: DBOrderFormItem[] = await ctx.prisma.orderForm
             .findFirst({ where: { id: parent.id } })
             .orderFormItems();
           return orderFormItems.map((orderFormItem) => {
