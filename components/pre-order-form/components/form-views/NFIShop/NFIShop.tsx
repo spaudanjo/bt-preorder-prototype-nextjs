@@ -7,40 +7,44 @@ import { Button, Center, Grid, Heading, Stack } from "@chakra-ui/react";
 import { FormViewSubmitComponentProps } from "../../../Types";
 import { StockDataItem } from "../../../../../lib/graphqlClientTypes";
 
-interface NormalisedAndLocalisedProductTypeTuple {
-  normalised: string;
-  localised: string;
-}
+// interface NormalisedAndLocalisedProductTypeTuple {
+//   normalised: string;
+//   localised: string;
+// }
 
 const NFIShop = ({
   onSubmitFormView,
   formViewId,
-  stockDataItems,
-}: FormViewSubmitComponentProps & { stockDataItems: StockDataItem[] }) => {
+  stockData,
+}: FormViewSubmitComponentProps & { stockData: StockDataItem[] }) => {
   const { currentLanguage } = React.useContext(GlobalContext);
   const [productTypeForDetailView, setProductTypeForDetailView] =
     useState<string>();
 
-  // const getProductsByProductType = (productType: string) => {
-  //   return stockData.filter((product) => product.productType === productType);
-  // };
+  const getProductsByProductCategoryName = (productType: string) => {
+    return stockData.flatMap(stockDataItem => stockDataItem.product).filter((product) => product.category.name === productType);
+  };
 
-  const normalisedAndLocalisedProductTypeTuples = stockData.reduce<{
-    [key: string]: NormalisedAndLocalisedProductTypeTuple;
-  }>((acc, product) => {
-    const localizedProductDetails =
-      getLocalizedProductDetailsForCurrentLanguageOrForEnglish(
-        product,
-        currentLanguage.id
-      );
-    return {
-      ...acc,
-      [product.productType]: {
-        normalised: product.productType,
-        localised: localizedProductDetails.productType,
-      },
-    };
-  }, {});
+  // const normalisedAndLocalisedProductTypeTuples = stockData.reduce<{
+  //   [key: string]: NormalisedAndLocalisedProductTypeTuple;
+  // }>((acc, product) => {
+  //   const localizedProductDetails =
+  //     getLocalizedProductDetailsForCurrentLanguageOrForEnglish(
+  //       product,
+  //       currentLanguage.id
+  //     );
+  //   return {
+  //     ...acc,
+  //     [product.productType]: {
+  //       normalised: product.productType,
+  //       localised: localizedProductDetails.productType,
+  //     },
+  //   };
+  // }, {});
+
+  const productCategoryNames = stockData.reduce<string[]>((acc, stockDataItem) => {
+    return [...acc, stockDataItem.product.category.name];
+  }, []);
 
   return (
     <Stack>
@@ -49,7 +53,7 @@ const NFIShop = ({
           // isOpen={productTypeForDetailView != null}
           onClose={() => setProductTypeForDetailView(undefined)}
           // productType={productTypeForDetailView}
-          productsForType={getProductsByProductType(productTypeForDetailView)}
+          productsForType={getProductsByProductCategoryName(productTypeForDetailView)}
           // onAddToCart={}
         />
       )}
@@ -57,20 +61,16 @@ const NFIShop = ({
         <I18n k="nfiShop.title" />
       </Heading>
       <Grid>
-        {Object.keys(normalisedAndLocalisedProductTypeTuples)
-          .map(
-            (productTypeKey) => normalisedAndLocalisedProductTypeTuples[productTypeKey]
-          )
-          .map((productType) => (
-              <Button
-              key={productType.normalised}
-                onClick={() =>
-                  // alert(`SHOW PRODUCT DETAILS FOR ${productType.normalised}`)
-                  setProductTypeForDetailView(productType.normalised)
-                }
-              >
-                {productType.localised}
-              </Button>
+        {productCategoryNames.map((productCategoryName) => (
+            <Button
+              key={productCategoryName}
+              onClick={() =>
+                // alert(`SHOW PRODUCT DETAILS FOR ${productType.normalised}`)
+                setProductTypeForDetailView(productCategoryName)
+              }
+            >
+              {productCategoryName}
+            </Button>
           ))}
       </Grid>
       <Button

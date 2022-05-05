@@ -28,6 +28,10 @@ const FORM_QUERY = gql`
               id
               name
               gender
+              category {
+                id
+                name
+              }
             }
           }
         }

@@ -13,6 +13,7 @@ import FinalSubmitView from "./form-views/FinalSubmitView";
 import InfoMessage from "./form-views/InfoMessage";
 import LanguageChooser from "./form-views/LanguageChooser";
 import MedicalHelpForm from "./form-views/MedicalHelp";
+import NFIShop from "./form-views/NFIShop/NFIShop";
 // import { getLocalizedContentForCurrentLanguageOrForEnglish } from "./form-views/NFIShop/helpers";
 // import NFIShop from "./form-views/NFIShop/NFIShop";
 import TextInput from "./form-views/TextInput";
@@ -43,10 +44,11 @@ const FormViewComponent = ({
     //   console.log(getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id))
     //   return <TextInput {...{...props, ...getLocalizedContentForCurrentLanguageOrForEnglish(formViewData, currentLanguage.id)}} />;
     // }
-    // case "nfi-shop": {
-    //   // return <NFIShop {...props} stockData={formViewData.stockData} />;
-    //   return <div>NOT IMPLEMENTED YET</div>;
-    // }
+    case "ShoppingForm": {
+      formViewData.stockData
+      // return <NFIShop {...props} stockData={formViewData.stockData} />;
+      return <NFIShop {...{...props, ...formViewData}} />;
+    }
   }
   return <div>FALLBACK</div>;
 };
