@@ -1,5 +1,3 @@
-import react from "React"; 
-
 interface LayoutProps {
     children: React.ReactNode;
 }
