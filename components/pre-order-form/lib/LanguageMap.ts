@@ -15,7 +15,10 @@ const languageMap: LanguageMap = {
         "submitForm.confirm": "All Good? Submit?",
         "navigationBar.back": "Back",
         "languageChooser.title": "Language",
-        "languageChooser.description": "Please choose your preferred language"
+        "languageChooser.description": "Please choose your preferred language",
+        "basics.MALE": "Men",
+        "basics.FEMALE": "Women",
+        "basics.KIDS": "Kids"
       },
     },
     de: {
@@ -32,7 +35,10 @@ const languageMap: LanguageMap = {
         "submitForm.confirm": "Passt alles? Abschicken?",
         "navigationBar.back": "Züruck",
         "languageChooser.title": "Sprache",
-        "languageChooser.description": "Bitte wähle deine bevorzugte Sprache"
+        "languageChooser.description": "Bitte wähle deine bevorzugte Sprache",
+        "basics.MALE": "Männer",
+        "basics.FEMALE": "Frauen",
+        "basics.KIDS": "Kinder",
       },
     },
   };

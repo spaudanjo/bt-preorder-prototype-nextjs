@@ -66,7 +66,7 @@ ProductDetaiViewProps) => {
                   </h2>
                   <AccordionPanel pb={4}>
                     {productsForTypeAndGender.map((stockDataItem, i) => {
-                      return <p key={i}> {stockDataItem.product.gender} </p>;
+                      return <p key={i}> {stockDataItem.size} </p>;
                     })}
                   </AccordionPanel>
                 </AccordionItem>
