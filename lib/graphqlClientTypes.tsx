@@ -95,14 +95,14 @@ export type StockDataItem = {
   size: Scalars['String'];
 };
 
-export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string }> };
-
 export type OrderFormQueryVariables = Exact<{
   formId: Scalars['String'];
 }>;
 
 
 export type OrderFormQuery = { __typename?: 'Query', orderForm?: { __typename?: 'OrderForm', id: string, slug: string, status: OrderFormStatus, orderFormItems: Array<{ __typename: 'InfoMessageForm', infoMessage: string, orderFormViewType: OrderFormViewType, id: string } | { __typename: 'ShoppingForm', shoppingInfo?: string | null, orderFormViewType: OrderFormViewType, id: string, stockData: Array<{ __typename?: 'StockDataItem', id: string, size: string, availableItems: number, product: { __typename?: 'Product', id: string, name: string, gender: Gender, category: { __typename?: 'ProductCategory', id: string, name: string } } }> }> } | null };
+
+export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string }> };
